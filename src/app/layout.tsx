@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Footer from "@/components/layout/Footer";
+import MobileTabBar from "@/components/layout/MobileTabBar";
 import Navbar from "@/components/layout/Navbar";
 import SmoothScroll from "@/components/layout/SmoothScroll";
 import { site } from "@/data/site";
@@ -42,6 +43,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
+  // Lets the mobile tab bar extend under the iPhone home indicator (padded via safe-area insets).
+  viewportFit: "cover",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#f7f7f9" },
     { media: "(prefers-color-scheme: dark)", color: "#08080c" },
@@ -61,7 +64,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="flex min-h-full flex-col font-sans">
+      <body className="flex min-h-full flex-col pb-[calc(6.5rem+env(safe-area-inset-bottom))] font-sans md:pb-0">
         <a
           href="#main"
           className="fixed top-3 left-3 z-100 -translate-y-24 rounded-full bg-accent px-4 py-2 text-sm font-medium text-accent-fg transition focus:translate-y-0"
@@ -74,6 +77,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <Footer />
+        <MobileTabBar />
       </body>
     </html>
   );
