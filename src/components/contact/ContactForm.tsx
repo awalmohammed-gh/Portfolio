@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { FaPaperPlane } from "react-icons/fa6";
+import { LuSend } from "react-icons/lu";
 import { services } from "@/data/services";
 import { site } from "@/data/site";
 
 const fieldClass =
-  "mt-2 w-full rounded-lg bg-navy-950/70 px-4 py-3 text-sm text-ink ring-1 ring-white/10 placeholder:text-ink-subtle outline-none transition focus:ring-2 focus:ring-accent";
+  "mt-2 block w-full rounded-xl border border-line-strong bg-surface px-4 py-3 text-base text-fg transition outline-none placeholder:text-subtle focus:border-accent focus:ring-4 focus:ring-accent/20";
 
 /**
  * Frontend-only contact form: it composes an email in the visitor's mail app
@@ -24,9 +24,14 @@ export default function ContactForm() {
     const message = String(data.get("message") ?? "").trim();
 
     const subject = `Project enquiry${service ? `: ${service}` : ""} from ${name}`;
-    const body = [message, "", "—", `Name: ${name}`, `Email: ${email}`, service && `Service: ${service}`]
-      .filter((line) => line !== "")
-      .join("\n");
+    const body = [
+      message,
+      "",
+      "—",
+      `Name: ${name}`,
+      `Email: ${email}`,
+      ...(service ? [`Service: ${service}`] : []),
+    ].join("\n");
 
     window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setOpened(true);
@@ -35,28 +40,44 @@ export default function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="reveal rounded-2xl bg-navy-900/70 p-6 ring-1 ring-white/5 sm:p-8"
+      aria-labelledby="contact-form-title"
+      className="reveal rounded-4xl border border-line bg-surface p-6 shadow-card sm:p-9"
     >
-      <div className="grid gap-5 sm:grid-cols-2">
-        <label className="block text-sm font-medium text-ink">
-          Name
-          <input name="name" required autoComplete="name" className={fieldClass} placeholder="Your name" />
+      <h2 id="contact-form-title" className="text-2xl font-semibold tracking-tight text-fg">
+        Send a message
+      </h2>
+      <p className="mt-2 text-[0.95rem] leading-7 text-muted">
+        Tell me about your project. I’ll reply by email.
+      </p>
+
+      <div className="mt-8 grid gap-5 sm:grid-cols-2">
+        <label className="block text-sm font-medium text-fg">
+          Your name
+          <input
+            name="name"
+            required
+            autoComplete="name"
+            maxLength={120}
+            className={fieldClass}
+            placeholder="Your full name"
+          />
         </label>
-        <label className="block text-sm font-medium text-ink">
-          Email
+        <label className="block text-sm font-medium text-fg">
+          Email address
           <input
             name="email"
             type="email"
             required
             autoComplete="email"
+            maxLength={254}
             className={fieldClass}
             placeholder="you@example.com"
           />
         </label>
       </div>
 
-      <label className="mt-5 block text-sm font-medium text-ink">
-        Service <span className="font-normal text-ink-subtle">(optional)</span>
+      <label className="mt-5 block text-sm font-medium text-fg">
+        Service <span className="font-normal text-muted">(optional)</span>
         <select name="service" defaultValue="" className={fieldClass}>
           <option value="">Select a service</option>
           {services.map((s) => (
@@ -68,29 +89,33 @@ export default function ContactForm() {
         </select>
       </label>
 
-      <label className="mt-5 block text-sm font-medium text-ink">
+      <label className="mt-5 block text-sm font-medium text-fg">
         Message
         <textarea
           name="message"
           required
           rows={6}
-          className={`${fieldClass} resize-y`}
+          maxLength={5000}
+          className={`${fieldClass} resize-y leading-7`}
           placeholder="Tell me about your project, goals, and timeline."
         />
       </label>
 
       <button
         type="submit"
-        className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-accent px-5 py-3 text-sm font-semibold text-navy-950 transition hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-auto"
+        className="group mt-7 inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-accent px-6 text-[0.95rem] font-medium text-accent-fg shadow-[0_8px_24px_-10px] shadow-accent/60 transition hover:bg-accent-hover sm:w-auto"
       >
-        <FaPaperPlane aria-hidden className="size-3.5" />
         Send message
+        <LuSend
+          aria-hidden="true"
+          className="size-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        />
       </button>
 
-      <p className="mt-4 text-xs text-ink-subtle" aria-live="polite">
+      <p className="mt-4 text-sm leading-6 text-muted" aria-live="polite">
         {opened
-          ? `Your email app should now be open with the message ready to send. If it didn't open, email ${site.email} directly.`
-          : "Submitting opens your email app with this message pre-filled."}
+          ? `Your email app should now be open with the message ready to send. If it didn’t open, email ${site.email} directly.`
+          : "Submitting opens your email app with this message pre-filled, so you can review it before sending."}
       </p>
     </form>
   );

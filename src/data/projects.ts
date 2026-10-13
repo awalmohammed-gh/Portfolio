@@ -122,12 +122,38 @@ export const projects: Project[] = [
   {
     slug: "village-store",
     title: "Village Store",
-    category: "Full-Stack E-commerce",
+    category: "Full-Stack E-commerce & CMS",
     summary:
-      "A clothing e-commerce platform featuring product discovery, category browsing, shopping functionality, and management workflows.",
+      "A clothing e-commerce platform with a customer storefront and an admin side that works as a content management system, controlling every section of the store.",
     description:
-      "A clothing e-commerce platform featuring product discovery, category browsing, shopping functionality, and management workflows.",
-    keyAreas: ["Product discovery", "Category browsing", "Shopping", "Store management"],
+      "A clothing e-commerce platform with two sides. Customers discover products, browse categories, and shop. The admin side is built as a content management system: the admin controls every section of the store and can update the interface without touching the codebase.",
+    keyAreas: [
+      "Product discovery",
+      "Category browsing",
+      "Shopping",
+      "Content management system (CMS)",
+      "Interface updates without code changes",
+    ],
+    roles: [
+      {
+        name: "Customer",
+        icon: FaUser,
+        responsibilities: [
+          "Customer-facing storefront",
+          "Product discovery and category browsing",
+          "Shopping functionality",
+        ],
+      },
+      {
+        name: "Admin",
+        icon: FaUserShield,
+        responsibilities: [
+          "Full control over every section of the store",
+          "Content management system for updating the storefront",
+          "Changes the interface without touching the codebase",
+        ],
+      },
+    ],
     technologies: [],
     status: "Completed",
     icon: FaShirt,

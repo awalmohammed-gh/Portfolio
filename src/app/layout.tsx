@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
+import SmoothScroll from "@/components/layout/SmoothScroll";
 import { site } from "@/data/site";
 import "./globals.css";
 
@@ -23,8 +24,9 @@ export const metadata: Metadata = {
   description: site.heroDescription,
   keywords: [
     "Mohammed Awal",
-    "Full-Stack Web Developer",
-    "Software Engineer",
+    "Web Developer",
+    "Full-Stack Development",
+    "SaaS Developer",
     "React",
     "Next.js",
     "Node.js",
@@ -39,19 +41,34 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f7f7f9" },
+    { media: "(prefers-color-scheme: dark)", color: "#08080c" },
+  ],
+};
+
+// Applies the saved (or system) theme before first paint to avoid a flash.
+const themeScript = `(function(){try{var t=localStorage.getItem("theme");if(t!=="light"&&t!=="dark"){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`;
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="flex min-h-full flex-col font-sans">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-60 focus:rounded-md focus:bg-accent focus:px-4 focus:py-2 focus:text-navy-950"
+          className="fixed top-3 left-3 z-100 -translate-y-24 rounded-full bg-accent px-4 py-2 text-sm font-medium text-accent-fg transition focus:translate-y-0"
         >
           Skip to content
         </a>
+        <SmoothScroll />
         <Navbar />
         <main id="main" className="flex-1">
           {children}

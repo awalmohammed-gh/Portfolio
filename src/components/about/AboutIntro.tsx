@@ -1,84 +1,82 @@
-import Image from "next/image";
-import { FaArrowRight, FaGraduationCap, FaLayerGroup, FaLaptopCode } from "react-icons/fa6";
+import { LuArrowRight, LuGraduationCap, LuLaptop, LuLayers } from "react-icons/lu";
 import ButtonLink from "@/components/ui/ButtonLink";
 import Container from "@/components/ui/Container";
+import Eyebrow from "@/components/ui/Eyebrow";
+import ProfilePhoto from "@/components/ui/ProfilePhoto";
 import { projects } from "@/data/projects";
 import { site } from "@/data/site";
 
 const facts = [
-  { icon: FaLaptopCode, label: "Focus", value: "Full-stack web development" },
-  { icon: FaGraduationCap, label: "Education", value: "BIT, Accra Institute of Technology" },
-  { icon: FaLayerGroup, label: "Portfolio", value: `${projects.length} full-stack projects` },
+  { icon: LuLaptop, label: "Focus", value: "Full-stack web development" },
+  { icon: LuGraduationCap, label: "Education", value: "BIT, Accra Institute of Technology" },
+  { icon: LuLayers, label: "Portfolio", value: `${projects.length} full-stack projects` },
 ];
 
 export default function AboutIntro() {
   return (
-    <section aria-labelledby="about-intro" className="py-20">
-      <Container className="grid items-center gap-12 lg:grid-cols-12">
-        <div className="reveal lg:col-span-5">
-          <div className="relative mx-auto max-w-sm lg:max-w-none">
-            <div
-              className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-accent/30 to-transparent blur-2xl"
-              aria-hidden
-            />
-            <div className="relative aspect-[4/5] overflow-hidden rounded-3xl ring-1 ring-white/10">
-              <Image
-                src={site.profileImage.src}
-                alt={site.profileImage.alt}
-                fill
-                sizes="(min-width: 1024px) 420px, (min-width: 640px) 384px, 100vw"
-                className="object-cover object-[62%_60%]"
-              />
-            </div>
+    <section aria-labelledby="about-intro" className="py-12 sm:py-16">
+      <Container className="grid items-start gap-10 lg:grid-cols-12 lg:gap-14">
+        <figure className="reveal lg:sticky lg:top-28 lg:col-span-5">
+          <div className="relative aspect-4/5 overflow-hidden rounded-4xl border border-line bg-surface-2 shadow-card">
+            <ProfilePhoto sizes="(min-width: 1024px) 640px, 100vw" />
           </div>
-        </div>
+          <figcaption className="mt-4 flex items-center justify-between text-sm text-muted">
+            <span className="font-medium text-fg">{site.name}</span>
+            <span>At work</span>
+          </figcaption>
+        </figure>
 
         <div className="lg:col-span-7">
-          <p className="reveal font-mono text-xs font-medium tracking-[0.2em] text-accent uppercase">
-            Who I am
-          </p>
-          <h2
-            id="about-intro"
-            className="reveal mt-3 text-3xl font-bold tracking-tight text-ink sm:text-4xl"
-          >
-            I build complete software, from interface to database.
-          </h2>
-          <div className="reveal mt-6 space-y-4 leading-relaxed text-ink-muted">
+          <div className="reveal">
+            <Eyebrow>Who I am</Eyebrow>
+            <h2
+              id="about-intro"
+              className="mt-4 text-3xl font-semibold tracking-tight text-balance text-fg sm:text-4xl lg:text-[2.75rem] lg:leading-[1.1]"
+            >
+              I build complete software, <span className="text-gradient">from interface to database.</span>
+            </h2>
+          </div>
+
+          <div className="reveal mt-7 space-y-5 text-base leading-8 text-muted sm:text-lg sm:leading-8">
             <p>
-              I&apos;m {site.name}, a {site.title}. I build complete web applications: the
-              interfaces people use, the backend logic that powers them, and the databases that
-              keep their information organised.
+              I’m {site.name}, a {site.title}. I build SaaS products and full-stack systems,
+              taking an idea beyond the screen: the interface people interact with, the backend logic behind each
+              action, and the database that holds it all together.
             </p>
             <p>
-              I have completed my coursework for a Bachelor of Information Technology at Accra
-              Institute of Technology, and I&apos;ve applied that foundation to full-stack projects
-              including e-commerce platforms, a real estate management platform, an employee
-              management system, a car rental system with role-based dashboards, and a learning
-              management system.
+              I’ve completed my coursework for a Bachelor of Information Technology at Accra
+              Institute of Technology, with graduation pending. Alongside that foundation, I’ve
+              built e-commerce platforms, a real estate management platform, an employee management
+              system, a car rental system with role-based dashboards, and a learning management
+              system.
             </p>
             <p>
               On the frontend I work with React, Next.js, TypeScript and Tailwind CSS. On the
               backend I use Node.js, Express.js and MongoDB to build REST APIs, authentication and
-              data-driven features. I care about clean code, responsive design, and software that
-              solves real problems.
+              data-driven features. My focus is simple: clear interfaces, maintainable code, and
+              software that solves real problems.
             </p>
           </div>
 
-          <dl className="reveal mt-8 grid gap-3 sm:grid-cols-3">
+          <dl className="reveal mt-9 grid gap-3 sm:grid-cols-3">
             {facts.map(({ icon: Icon, label, value }) => (
-              <div key={label} className="rounded-xl bg-navy-900/70 p-4 ring-1 ring-white/5">
-                <dt className="flex items-center gap-2 text-xs text-ink-subtle">
-                  <Icon aria-hidden className="text-accent" />
+              <div key={label} className="rounded-2xl border border-line bg-surface p-5 shadow-card">
+                <dt className="flex items-center gap-2 text-sm text-muted">
+                  <Icon aria-hidden="true" className="size-4 text-accent" />
                   {label}
                 </dt>
-                <dd className="mt-1.5 text-sm font-medium text-ink">{value}</dd>
+                <dd className="mt-2 font-medium text-fg">{value}</dd>
               </div>
             ))}
           </dl>
 
-          <div className="reveal mt-8 flex flex-wrap gap-3">
+          <div className="reveal mt-9 flex flex-wrap gap-3">
             <ButtonLink href="/projects">
-              View my projects <FaArrowRight aria-hidden className="size-3" />
+              View my projects
+              <LuArrowRight
+                aria-hidden="true"
+                className="size-4 transition group-hover/button:translate-x-0.5"
+              />
             </ButtonLink>
             <ButtonLink href="/contact" variant="secondary">
               Get in touch

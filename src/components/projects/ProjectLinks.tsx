@@ -1,8 +1,9 @@
-import { FaArrowRight, FaArrowUpRightFromSquare, FaGithub } from "react-icons/fa6";
+import { LuArrowRight, LuArrowUpRight } from "react-icons/lu";
+import { FaGithub } from "react-icons/fa6";
 import ButtonLink from "@/components/ui/ButtonLink";
 import type { Project } from "@/types/project";
 
-/** Only renders buttons for links that exist; falls back to a working contact link. */
+/** Renders only the links that exist, with a working contact fallback. */
 export default function ProjectLinks({
   project,
   size = "sm",
@@ -14,11 +15,11 @@ export default function ProjectLinks({
 
   if (!liveUrl && !githubUrl) {
     return (
-      <ButtonLink href="/contact" variant="ghost" size={size} className="group/link">
+      <ButtonLink href="/contact" variant="ghost">
         Ask about this project
-        <FaArrowRight
-          aria-hidden
-          className="size-3 transition group-hover/link:translate-x-0.5"
+        <LuArrowRight
+          aria-hidden="true"
+          className="size-4 transition group-hover/button:translate-x-0.5"
         />
       </ButtonLink>
     );
@@ -28,14 +29,16 @@ export default function ProjectLinks({
     <div className="flex flex-wrap gap-2">
       {liveUrl && (
         <ButtonLink href={liveUrl} external size={size}>
-          <FaArrowUpRightFromSquare aria-hidden className="size-3" />
-          Live Demo<span className="sr-only"> of {title}</span>
+          Live Demo
+          <LuArrowUpRight aria-hidden="true" className="size-4" />
+          <span className="sr-only">: {title}</span>
         </ButtonLink>
       )}
       {githubUrl && (
-        <ButtonLink href={githubUrl} external variant="secondary" size={size}>
-          <FaGithub aria-hidden className="size-3.5" />
-          GitHub<span className="sr-only"> repository for {title}</span>
+        <ButtonLink href={githubUrl} external size={size} variant="secondary">
+          <FaGithub aria-hidden="true" className="size-4" />
+          GitHub
+          <span className="sr-only">: {title}</span>
         </ButtonLink>
       )}
     </div>

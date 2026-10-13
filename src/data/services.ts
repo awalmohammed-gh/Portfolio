@@ -1,8 +1,8 @@
 import {
   FaCartShopping,
+  FaCloud,
   FaGaugeHigh,
   FaGlobe,
-  FaLayerGroup,
   FaListCheck,
   FaWandMagicSparkles,
 } from "react-icons/fa6";
@@ -17,11 +17,11 @@ export const services: Service[] = [
     includes: ["Responsive layouts", "Business & personal websites", "SEO-friendly structure"],
   },
   {
-    title: "Full-Stack Web Application Development",
+    title: "SaaS & Full-Stack Web Applications",
     description:
-      "Complete web applications, from the user interface to the server, API, and database behind it.",
-    icon: FaLayerGroup,
-    includes: ["Frontend interfaces", "Node.js & Express.js APIs", "MongoDB data modelling"],
+      "Subscription-based SaaS products and complete web applications, from the user interface to the server, API, and database behind them.",
+    icon: FaCloud,
+    includes: ["SaaS products & subscription workflows", "Node.js & Express.js APIs", "MongoDB data modelling"],
   },
   {
     title: "E-commerce System Development",

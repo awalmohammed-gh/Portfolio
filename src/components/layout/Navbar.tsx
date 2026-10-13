@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { FaBars, FaXmark } from "react-icons/fa6";
-import { navLinks, site } from "@/data/site";
+import { useRef, useState } from "react";
+import { LuArrowUpRight, LuMenu, LuX } from "react-icons/lu";
+import ThemeToggle from "@/components/ui/ThemeToggle";
+import { navLinks } from "@/data/site";
 
 function isActive(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -13,91 +14,104 @@ function isActive(pathname: string, href: string) {
 export default function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const pageLinks = navLinks.filter((link) => link.href !== "/contact");
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/5 bg-navy-950/80 backdrop-blur-md">
+    <header
+      className="sticky top-0 z-50 border-b border-line bg-surface/80 backdrop-blur-xl"
+      onKeyDown={(event) => {
+        if (event.key === "Escape" && open) {
+          setOpen(false);
+          toggleRef.current?.focus();
+        }
+      }}
+    >
       <nav
         aria-label="Main"
-        className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6"
+        className="mx-auto flex h-18 w-full max-w-330 items-center justify-between gap-3 px-4 sm:px-6 lg:px-8"
       >
         <Link
           href="/"
-          className="flex items-center gap-2 font-semibold tracking-tight text-ink"
           onClick={() => setOpen(false)}
+          className="flex items-center gap-3 rounded-xl"
+          aria-label="Web Developer, home"
         >
-          <span className="grid size-8 place-items-center rounded-lg bg-accent/10 font-mono text-sm text-accent ring-1 ring-accent/30">
-            MA
-          </span>
-          <span className="hidden sm:inline">{site.name}</span>
+          <span className="text-[0.95rem] font-semibold text-fg">Web Developer</span>
         </Link>
 
         <ul className="hidden items-center gap-1 md:flex">
-          {navLinks.map((link) => {
-            const active = isActive(pathname, link.href);
+          {pageLinks.map(({ href, label }) => {
+            const active = isActive(pathname, href);
             return (
-              <li key={link.href}>
+              <li key={href}>
                 <Link
-                  href={link.href}
+                  href={href}
                   aria-current={active ? "page" : undefined}
-                  className={`rounded-md px-3 py-2 text-sm transition-colors ${
-                    active ? "text-accent" : "text-ink-muted hover:text-ink"
+                  className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+                    active
+                      ? "bg-surface-2 text-fg"
+                      : "text-muted hover:bg-surface-2 hover:text-fg"
                   }`}
                 >
-                  {link.label}
+                  {label}
                 </Link>
               </li>
             );
           })}
         </ul>
 
-        <Link
-          href="/contact"
-          className="hidden rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-navy-950 transition hover:bg-accent-soft md:inline-block"
-        >
-          Hire Me
-        </Link>
-
-        <button
-          type="button"
-          className="grid size-10 place-items-center rounded-lg text-ink ring-1 ring-white/10 md:hidden"
-          aria-expanded={open}
-          aria-controls="mobile-menu"
-          aria-label={open ? "Close menu" : "Open menu"}
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? <FaXmark className="size-5" /> : <FaBars className="size-5" />}
-        </button>
+        <div className="flex items-center gap-1">
+          <ThemeToggle />
+          <Link
+            href="/contact"
+            className="group ml-1 hidden h-10 items-center gap-1.5 rounded-full bg-accent px-4 text-sm font-medium text-accent-fg transition hover:bg-accent-hover sm:inline-flex"
+          >
+            Let’s talk
+            <LuArrowUpRight
+              aria-hidden="true"
+              className="size-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            />
+          </Link>
+          <button
+            ref={toggleRef}
+            type="button"
+            className="grid size-10 place-items-center rounded-full text-fg transition hover:bg-surface-2 md:hidden"
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen((value) => !value)}
+          >
+            {open ? (
+              <LuX aria-hidden="true" className="size-5" />
+            ) : (
+              <LuMenu aria-hidden="true" className="size-5" />
+            )}
+          </button>
+        </div>
       </nav>
 
       {open && (
-        <div id="mobile-menu" className="border-t border-white/5 bg-navy-950 md:hidden">
-          <ul className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-4">
-            {navLinks.map((link) => {
-              const active = isActive(pathname, link.href);
+        <div id="mobile-menu" className="border-t border-line bg-surface md:hidden">
+          <ul className="mx-auto max-w-330 px-2 py-2 sm:px-4">
+            {navLinks.map(({ href, label }) => {
+              const active = isActive(pathname, href);
               return (
-                <li key={link.href}>
+                <li key={href}>
                   <Link
-                    href={link.href}
-                    aria-current={active ? "page" : undefined}
+                    href={href}
                     onClick={() => setOpen(false)}
-                    className={`block rounded-lg px-3 py-3 text-base ${
-                      active ? "bg-accent/10 text-accent" : "text-ink-muted hover:bg-white/5"
+                    aria-current={active ? "page" : undefined}
+                    className={`flex items-center justify-between rounded-xl px-4 py-3.5 text-base font-medium transition ${
+                      active ? "bg-accent-soft text-accent" : "text-fg hover:bg-surface-2"
                     }`}
                   >
-                    {link.label}
+                    {label}
+                    <LuArrowUpRight aria-hidden="true" className="size-4 text-subtle" />
                   </Link>
                 </li>
               );
             })}
-            <li className="pt-2">
-              <Link
-                href="/contact"
-                onClick={() => setOpen(false)}
-                className="block rounded-lg bg-accent px-3 py-3 text-center font-semibold text-navy-950"
-              >
-                Hire Me
-              </Link>
-            </li>
           </ul>
         </div>
       )}

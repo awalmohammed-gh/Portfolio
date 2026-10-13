@@ -1,79 +1,96 @@
 import Link from "next/link";
-import { FaEnvelope, FaPhone } from "react-icons/fa6";
+import { LuArrowUp, LuMail, LuPhone } from "react-icons/lu";
+import Container from "@/components/ui/Container";
 import { navLinks, site, socialLinks } from "@/data/site";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/5 bg-navy-950">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-3">
-        <div>
-          <p className="font-semibold text-ink">{site.name}</p>
-          <p className="mt-2 text-sm text-ink-muted">{site.title}</p>
-          <p className="mt-4 max-w-xs text-sm text-ink-subtle">
-            Building complete web solutions, from user interfaces to backend systems and
-            databases.
-          </p>
-        </div>
+    <footer className="mt-auto border-t border-line bg-surface">
+      <Container>
+        <div className="grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1.2fr]">
+          <div>
+            <Link href="/" className="inline-flex items-center gap-3 rounded-xl">
+              <span className="grid size-9 place-items-center rounded-xl bg-[#4f46e5] text-sm font-bold tracking-tight text-white">
+                MA
+              </span>
+              <span className="text-lg font-semibold text-fg">{site.name}</span>
+            </Link>
+            <p className="mt-4 max-w-xs text-[0.95rem] leading-7 text-muted">
+              {site.title}. Building SaaS products and complete full-stack systems, from
+              user interfaces to backend services and databases.
+            </p>
+          </div>
 
-        <nav aria-label="Footer">
-          <p className="text-sm font-semibold text-ink">Pages</p>
-          <ul className="mt-3 grid grid-cols-2 gap-2 text-sm">
-            {navLinks.map((link) => (
-              <li key={link.href}>
-                <Link href={link.href} className="text-ink-muted transition hover:text-accent">
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+          <nav aria-label="Footer">
+            <p className="text-sm font-semibold text-fg">Pages</p>
+            <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-3 text-[0.95rem]">
+              {navLinks.map(({ href, label }) => (
+                <li key={href}>
+                  <Link href={href} className="text-muted transition hover:text-accent">
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-        <div>
-          <p className="text-sm font-semibold text-ink">Get in touch</p>
-          <ul className="mt-3 space-y-2 text-sm">
-            <li>
-              <a
-                href={`mailto:${site.email}`}
-                className="inline-flex items-center gap-2 break-all text-ink-muted transition hover:text-accent"
-              >
-                <FaEnvelope className="shrink-0 text-accent" aria-hidden />
-                {site.email}
-              </a>
-            </li>
-            {site.phones.map((phone) => (
-              <li key={phone.href}>
+          <div>
+            <p className="text-sm font-semibold text-fg">Get in touch</p>
+            <ul className="mt-4 space-y-3 text-[0.95rem]">
+              <li>
                 <a
-                  href={phone.href}
-                  className="inline-flex items-center gap-2 text-ink-muted transition hover:text-accent"
+                  href={`mailto:${site.email}`}
+                  className="inline-flex items-center gap-2.5 break-all text-muted transition hover:text-accent"
                 >
-                  <FaPhone className="shrink-0 text-accent" aria-hidden />
-                  {phone.display}
+                  <LuMail aria-hidden="true" className="size-4 shrink-0 text-accent" />
+                  {site.email}
                 </a>
               </li>
-            ))}
-          </ul>
-          {socialLinks.length > 0 && (
-            <ul className="mt-4 flex gap-3">
-              {socialLinks.map(({ label, href, icon: Icon }) => (
-                <li key={href}>
+              {site.phones.map((phone) => (
+                <li key={phone.href}>
                   <a
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={label}
-                    className="grid size-9 place-items-center rounded-lg text-ink-muted ring-1 ring-white/10 transition hover:text-accent hover:ring-accent/40"
+                    href={phone.href}
+                    className="inline-flex items-center gap-2.5 text-muted transition hover:text-accent"
                   >
-                    <Icon aria-hidden />
+                    <LuPhone aria-hidden="true" className="size-4 shrink-0 text-accent" />
+                    {phone.display}
                   </a>
                 </li>
               ))}
             </ul>
-          )}
+            {socialLinks.length > 0 && (
+              <ul className="mt-5 flex gap-2">
+                {socialLinks.map(({ label, href, icon: Icon }) => (
+                  <li key={href}>
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${label} (opens in a new tab)`}
+                      className="grid size-10 place-items-center rounded-full border border-line text-muted transition hover:border-line-strong hover:text-fg"
+                    >
+                      <Icon aria-hidden="true" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
-      </div>
-      <div className="border-t border-white/5 py-6 text-center text-xs text-ink-subtle">
-        © <CurrentYear /> {site.name}. All rights reserved.
-      </div>
+
+        <div className="flex flex-wrap items-center justify-between gap-4 border-t border-line py-6 text-sm text-subtle">
+          <p>
+            © <CurrentYear /> {site.name}. All rights reserved.
+          </p>
+          <a
+            href="#main"
+            className="inline-flex items-center gap-2 rounded-full transition hover:text-fg"
+          >
+            Back to top
+            <LuArrowUp aria-hidden="true" className="size-4" />
+          </a>
+        </div>
+      </Container>
     </footer>
   );
 }

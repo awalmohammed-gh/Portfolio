@@ -3,14 +3,15 @@ import type { ReactNode } from "react";
 
 const variants = {
   primary:
-    "bg-accent text-navy-950 hover:bg-accent-soft shadow-[0_0_24px_-6px] shadow-accent/50",
-  secondary: "text-ink ring-1 ring-white/15 hover:ring-accent/60 hover:text-accent",
-  ghost: "text-accent hover:text-accent-soft px-0",
+    "bg-accent text-accent-fg shadow-[0_8px_24px_-10px] shadow-accent/60 hover:bg-accent-hover",
+  secondary:
+    "border border-line bg-surface text-fg shadow-card hover:border-line-strong",
+  ghost: "text-accent hover:text-accent-hover",
 } as const;
 
 const sizes = {
-  md: "px-5 py-3 text-sm",
-  sm: "px-3.5 py-2 text-xs",
+  md: "h-12 px-6 text-[0.95rem]",
+  sm: "h-10 px-4 text-sm",
 } as const;
 
 export default function ButtonLink({
@@ -28,9 +29,11 @@ export default function ButtonLink({
   external?: boolean;
   className?: string;
 }) {
-  const classes = `inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${sizes[size]} ${variants[variant]} ${className}`;
+  const classes = `group/button inline-flex shrink-0 items-center justify-center gap-2 rounded-full font-medium transition ${
+    variant === "ghost" ? "h-auto px-0 text-[0.95rem]" : sizes[size]
+  } ${variants[variant]} ${className}`;
 
-  if (external || href.startsWith("mailto:")) {
+  if (external || /^(mailto:|tel:|#)/.test(href)) {
     return (
       <a
         href={href}
@@ -38,6 +41,7 @@ export default function ButtonLink({
         {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       >
         {children}
+        {external && <span className="sr-only"> (opens in a new tab)</span>}
       </a>
     );
   }

@@ -2,12 +2,12 @@ import type { NavLink, SocialLink } from "@/types/content";
 
 export const site = {
   name: "Mohammed Awal",
-  title: "Full-Stack Web Developer & Software Engineer",
+  title: "Web Developer",
   heroIntro:
-    "Hello, I'm Mohammed Awal, a Full-Stack Web Developer passionate about building modern websites, powerful web applications, and scalable digital solutions.",
+    "Hello, I'm Mohammed Awal, a Web Developer who builds SaaS products, powerful web applications, and complete full-stack systems.",
   heroHeading: "Building Digital Experiences From Frontend to Backend.",
   heroDescription:
-    "I develop responsive, user-friendly web applications and full-stack software solutions, combining modern frontend technologies with reliable backend systems to solve real-world problems.",
+    "I build both sides of a product: responsive, user-friendly interfaces on the frontend, and the servers, APIs, and databases that power them on the backend, from business websites to subscription-based SaaS platforms.",
   email: "awalm8043@gmail.com",
   // Ghanaian numbers: shown in local format, dialled with the +233 country code.
   phones: [

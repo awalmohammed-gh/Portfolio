@@ -1,37 +1,51 @@
-import { FaAward } from "react-icons/fa6";
+import { LuAward } from "react-icons/lu";
 import { education } from "@/data/education";
 
-/** Compact summary of qualifications, derived from the education data. */
+/** Compact qualifications summary, derived from the education data. */
 export default function Qualifications() {
   return (
     <aside
       aria-labelledby="qualifications-heading"
-      className="reveal rounded-2xl bg-gradient-to-b from-navy-800/80 to-navy-900/80 p-6 ring-1 ring-white/10"
+      className="reveal relative overflow-hidden rounded-3xl border border-line bg-surface p-6 shadow-card sm:p-8"
     >
-      <h3 id="qualifications-heading" className="flex items-center gap-2 font-semibold text-ink">
-        <FaAward aria-hidden className="text-accent" />
+      <div
+        className="pointer-events-none absolute -top-20 -right-20 size-56 rounded-full bg-accent/10 blur-3xl"
+        aria-hidden="true"
+      />
+      <h3
+        id="qualifications-heading"
+        className="relative flex items-center gap-3 text-lg font-semibold tracking-tight text-fg"
+      >
+        <span className="grid size-10 place-items-center rounded-xl bg-accent-soft text-accent">
+          <LuAward aria-hidden="true" className="size-5" />
+        </span>
         Qualifications
       </h3>
 
-      <ul className="mt-5 space-y-4">
+      <ul className="relative mt-6 space-y-3">
         {education.map(({ id, institution, qualification }) => {
           const completed = qualification.status === "completed";
           return (
-            <li key={id} className="rounded-xl bg-navy-950/60 p-4 ring-1 ring-white/5">
-              <p className="font-mono text-2xl font-bold text-accent">{qualification.shortTitle}</p>
-              <p className="mt-1 text-sm font-medium text-ink">{qualification.title}</p>
-              <p className="mt-0.5 text-sm text-ink-muted">{institution}</p>
-              <p
-                className={`mt-3 text-xs font-medium ${completed ? "text-emerald-300" : "text-amber-300"}`}
-              >
-                {qualification.statusLabel}
-              </p>
+            <li key={id} className="rounded-2xl border border-line bg-surface-2 p-5">
+              <div className="flex items-baseline justify-between gap-3">
+                <p className="text-gradient text-3xl font-semibold tracking-tight">
+                  {qualification.shortTitle}
+                </p>
+                <span
+                  className={`text-sm font-medium ${completed ? "text-success" : "text-warning"}`}
+                >
+                  {completed ? "Completed" : "Graduation pending"}
+                </span>
+              </div>
+              <p className="mt-2 font-medium text-fg">{qualification.title}</p>
+              <p className="mt-0.5 text-[0.95rem] text-muted">{institution}</p>
+              <p className="mt-2 text-sm text-muted">{qualification.statusLabel}</p>
             </li>
           );
         })}
       </ul>
 
-      <p className="mt-5 text-xs leading-relaxed text-ink-subtle">
+      <p className="relative mt-5 text-sm leading-6 text-muted">
         The Bachelor of Information Technology will be formally conferred upon graduation.
       </p>
     </aside>

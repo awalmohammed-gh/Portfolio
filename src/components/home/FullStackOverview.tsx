@@ -2,59 +2,72 @@ import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { skillGroups } from "@/data/skills";
 
-const stackLayers = [
+const layers = [
   {
     group: "Frontend Development",
+    label: "Frontend",
     heading: "Interfaces people enjoy using",
-    text: "Responsive, accessible user interfaces built with modern component-based tooling.",
+    text: "Responsive, accessible user interfaces that make browsing, buying, and managing feel straightforward.",
   },
   {
     group: "Backend Development",
+    label: "Backend",
     heading: "Logic that powers the product",
-    text: "Server-side applications, REST APIs, and authentication that keep data and users secure.",
+    text: "Server-side applications, REST APIs, and authentication that connect every action to what happens next.",
   },
   {
     group: "Database",
+    label: "Database",
     heading: "Data that stays organised",
-    text: "Well-structured data models for products, orders, users, records, and more.",
+    text: "Structured data models for the products, people, and records an application depends on.",
   },
 ];
 
 export default function FullStackOverview() {
   return (
-    <section aria-labelledby="what-i-build" className="border-y border-white/5 bg-navy-900/40 py-20">
+    <section aria-labelledby="what-i-build" className="py-16 sm:py-24">
       <Container>
         <SectionHeading
           id="what-i-build"
           eyebrow="What I build"
-          title="Complete systems, not just screens"
-          description="Every project I take on can cover the full stack: what users see, the server behind it, and the data underneath."
-          align="center"
+          title="Complete systems, from the interface to the database"
+          description="Every project can cover the full stack: what users see, the server behind it, and the data underneath."
         />
 
-        <ol className="mt-12 grid gap-5 md:grid-cols-3">
-          {stackLayers.map(({ group, heading, text }, index) => {
+        <ol className="mt-12 grid gap-4 md:grid-cols-3">
+          {layers.map(({ group, label, heading, text }, index) => {
             const skillGroup = skillGroups.find((g) => g.title === group);
             if (!skillGroup) return null;
             const Icon = skillGroup.icon;
             return (
               <li
                 key={group}
-                className="reveal relative flex flex-col rounded-2xl bg-navy-900 p-6 ring-1 ring-white/5 transition hover:ring-accent/30"
+                className="reveal group relative flex flex-col overflow-hidden rounded-3xl border border-line bg-surface p-7 shadow-card transition hover:border-line-strong"
               >
-                <div className="flex items-center justify-between">
-                  <span className="grid size-11 place-items-center rounded-xl bg-accent/10 text-accent ring-1 ring-accent/20">
-                    <Icon aria-hidden className="size-5" />
+                <div
+                  className="pointer-events-none absolute -top-16 -right-16 size-40 rounded-full bg-accent/10 blur-2xl transition group-hover:bg-accent/20"
+                  aria-hidden="true"
+                />
+                <div className="relative flex items-center justify-between">
+                  <span className="grid size-12 place-items-center rounded-2xl bg-accent-soft text-accent">
+                    <Icon aria-hidden="true" className="size-5" />
                   </span>
-                  <span className="font-mono text-xs text-ink-subtle">0{index + 1}</span>
+                  <span className="font-mono text-sm text-subtle">0{index + 1}</span>
                 </div>
-                <p className="mt-5 font-mono text-xs text-accent">{group.replace(" Development", "")}</p>
-                <h3 className="mt-1 text-lg font-semibold text-ink">{heading}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-ink-muted">{text}</p>
-                <ul className="mt-5 flex flex-wrap gap-2 pt-1">
+                <p className="relative mt-6 font-mono text-xs font-medium tracking-[0.14em] text-accent uppercase">
+                  {label}
+                </p>
+                <h3 className="relative mt-2 text-xl font-semibold tracking-tight text-fg">
+                  {heading}
+                </h3>
+                <p className="relative mt-3 text-[0.95rem] leading-7 text-muted">{text}</p>
+                <ul className="relative mt-6 flex flex-wrap gap-2 border-t border-line pt-5">
                   {skillGroup.skills.map(({ name, icon: SkillIcon }) => (
-                    <li key={name} title={name} className="inline-flex items-center gap-1.5 text-xs text-ink-muted">
-                      <SkillIcon aria-hidden className="size-3.5 text-accent-soft" />
+                    <li
+                      key={name}
+                      className="inline-flex items-center gap-1.5 rounded-full bg-surface-2 px-2.5 py-1 text-sm text-fg"
+                    >
+                      <SkillIcon aria-hidden="true" className="size-3.5 text-accent" />
                       {name}
                     </li>
                   ))}
