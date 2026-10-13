@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { LuArrowUp, LuMail, LuPhone } from "react-icons/lu";
 import Container from "@/components/ui/Container";
+import Logo from "@/components/ui/Logo";
 import { navLinks, site, socialLinks } from "@/data/site";
 
 export default function Footer() {
@@ -9,11 +10,8 @@ export default function Footer() {
       <Container>
         <div className="grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1.2fr]">
           <div>
-            <Link href="/" className="inline-flex items-center gap-3 rounded-xl">
-              <span className="grid size-9 place-items-center rounded-xl bg-[#4f46e5] text-sm font-bold tracking-tight text-white">
-                MA
-              </span>
-              <span className="text-lg font-semibold text-fg">{site.name}</span>
+            <Link href="/" className="inline-flex items-center rounded-lg" aria-label={`${site.name}, home`}>
+              <Logo />
             </Link>
             <p className="mt-4 max-w-xs text-[0.95rem] leading-7 text-muted">
               {site.title}. Building SaaS products and complete full-stack systems, from

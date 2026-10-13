@@ -4,8 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRef, useState } from "react";
 import { LuArrowUpRight, LuMenu, LuX } from "react-icons/lu";
+import Logo from "@/components/ui/Logo";
 import ThemeToggle from "@/components/ui/ThemeToggle";
-import { navLinks } from "@/data/site";
+import { navLinks, site } from "@/data/site";
 
 function isActive(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -34,10 +35,10 @@ export default function Navbar() {
         <Link
           href="/"
           onClick={() => setOpen(false)}
-          className="flex items-center gap-3 rounded-xl"
-          aria-label="Web Developer, home"
+          className="flex items-center rounded-lg"
+          aria-label={`${site.name}, home`}
         >
-          <span className="text-[0.95rem] font-semibold text-fg">Web Developer</span>
+          <Logo />
         </Link>
 
         <ul className="hidden items-center gap-1 md:flex">
