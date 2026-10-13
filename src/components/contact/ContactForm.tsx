@@ -2,8 +2,8 @@
 
 import { useState, type FormEvent } from "react";
 import { LuSend } from "react-icons/lu";
-import { services } from "@/data/services";
-import { site } from "@/data/site";
+import { services } from "../../data/services";
+import { site } from "../../data/site";
 
 const fieldClass =
   "mt-2 block w-full rounded-xl border border-line-strong bg-surface px-4 py-3 text-base text-fg transition outline-none placeholder:text-subtle focus:border-accent focus:ring-4 focus:ring-accent/20";
