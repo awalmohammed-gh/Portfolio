@@ -6,19 +6,23 @@
 
 export const settings = {
   siteName: "Mohammed Awal",
-  jobTitle: "Web Developer",
+  jobTitle: "Full-Stack Web Developer",
   siteDescription:
-    "I build both sides of a product: responsive, user-friendly interfaces on the frontend, and the servers, APIs, and databases that power them on the backend, from business websites to subscription-based SaaS platforms.",
-  seoTitle: "Mohammed Awal | Web Developer",
+    "Full-Stack Web Developer creating modern, reliable, and scalable digital products: business systems, web applications, dashboards, e-commerce platforms, management systems, and custom software that solve real operational problems.",
+  seoTitle: "Mohammed Awal | Full-Stack Web Developer",
   seoDescription:
-    "I build both sides of a product: responsive, user-friendly interfaces on the frontend, and the servers, APIs, and databases that power them on the backend, from business websites to subscription-based SaaS platforms.",
+    "Full-Stack Web Developer creating modern, reliable, and scalable digital products: business systems, web applications, dashboards, e-commerce platforms, management systems, and custom software that solve real operational problems.",
   keywords: [
     "Mohammed Awal",
-    "Web Developer",
+    "Full-Stack Web Developer",
     "Full-Stack Development",
-    "SaaS Developer",
+    "Business Systems",
+    "Web Applications",
+    "Dashboards",
+    "E-commerce",
     "React",
     "Next.js",
+    "TypeScript",
     "Node.js",
     "MongoDB",
   ],
@@ -361,12 +365,12 @@ export const education = [
 /** Page copy that was hardcoded in components. */
 export const content = {
   hero: {
-    badge: "Web Developer",
+    badge: "Full-Stack Web Developer",
     heading: { lead: "Building Digital Experiences From", highlight: "Frontend to Backend." },
     intro:
-      "Hello, I'm Mohammed Awal, a Web Developer who builds SaaS products, powerful web applications, and complete full-stack systems.",
+      "Hello, I'm Mohammed Awal, a Full-Stack Web Developer focused on creating modern, reliable, and scalable digital products.",
     description:
-      "I build both sides of a product: responsive, user-friendly interfaces on the frontend, and the servers, APIs, and databases that power them on the backend, from business websites to subscription-based SaaS platforms.",
+      "I design and develop business systems, web applications, dashboards, e-commerce platforms, management systems, and custom software solutions that solve real operational problems.",
     primaryCta: { label: "View Projects", href: "/projects" },
     secondaryCta: { label: "Contact Me", href: "/contact" },
     image: profileImage,
@@ -395,22 +399,24 @@ export const content = {
     seo: {
       title: "About",
       description:
-        "About Mohammed Awal, a Web Developer who builds SaaS products and full-stack systems: background, skills, education and qualifications.",
+        "About Mohammed Awal, a Full-Stack Web Developer who builds business systems, web applications, and custom software: background, skills, education and qualifications.",
     },
     header: {
       eyebrow: "About me",
-      title: { lead: "Web Developer building", highlight: "SaaS & full-stack systems." },
+      title: { lead: "Full-Stack Web Developer building", highlight: "systems for real business needs." },
       description:
-        "I design and build web applications and SaaS products end to end, covering the user interface, the backend services, and the database.",
+        "I create modern, reliable, and scalable digital products that are responsive, secure, maintainable, and designed around real business requirements.",
     },
     photo: profileImage,
     photoCaption: "At work",
     eyebrow: "Who I am",
     title: { lead: "I build complete software,", highlight: "from interface to database." },
     paragraphs: [
-      "I’m Mohammed Awal, a Web Developer. I build SaaS products and full-stack systems, taking an idea beyond the screen: the interface people interact with, the backend logic behind each action, and the database that holds it all together.",
+      "I’m Mohammed Awal, a Full-Stack Web Developer focused on creating modern, reliable, and scalable digital products.",
+      "I design and develop business systems, web applications, dashboards, e-commerce platforms, management systems, and custom software solutions that solve real operational problems.",
       "I’ve completed my coursework for a Bachelor of Information Technology at Accra Institute of Technology, with graduation pending. Alongside that foundation, I’ve built e-commerce platforms, a real estate management platform, an employee management system, a car rental system with role-based dashboards, and a learning management system.",
-      "On the frontend I work with React, Next.js, TypeScript and Tailwind CSS. On the backend I use Node.js, Express.js and MongoDB to build REST APIs, authentication and data-driven features. My focus is simple: clear interfaces, maintainable code, and software that solves real problems.",
+      "My core stack includes React, Next.js, TypeScript, Node.js, MongoDB, REST APIs, authentication, and modern frontend technologies. I also use AI-assisted development tools to improve productivity, debugging, testing, and development speed while maintaining a strong understanding of the underlying code and architecture.",
+      "My focus is not only on making applications look good, but on creating systems that are responsive, secure, maintainable, user-friendly, and designed around real business requirements.",
     ],
     facts: [
       { icon: "LuLaptop", label: "Focus", value: "Full-stack web development" },
@@ -557,6 +563,6 @@ export const content = {
 
   footer: {
     tagline:
-      "Web Developer. Building SaaS products and complete full-stack systems, from user interfaces to backend services and databases.",
+      "Full-Stack Web Developer. Building modern, reliable, and scalable business systems, web applications, and custom software.",
   },
 };
