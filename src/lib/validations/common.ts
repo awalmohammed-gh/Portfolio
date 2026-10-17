@@ -48,8 +48,13 @@ export const iconName = z
   .trim()
   .refine(isIconName, "Choose an icon from the list");
 
+/** List of short strings. Blank rows (e.g. an added-but-unfilled item) are dropped, not rejected. */
 export const stringList = (maxItems: number, maxLength: number) =>
-  z.array(requiredText(maxLength, "Item")).max(maxItems).default([]);
+  z
+    .array(text(maxLength))
+    .transform((items) => items.filter(Boolean))
+    .pipe(z.array(z.string()).max(maxItems))
+    .default([]);
 
 export const objectId = z.string().regex(/^[a-f\d]{24}$/i, "Invalid id");
 

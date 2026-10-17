@@ -24,6 +24,27 @@ import {
 
 const fieldId = (path: string) => `field-${path.replace(/\./g, "-")}`;
 
+/** Closest rendered field for an error path ("keyAreas.2" → "keyAreas"), since list items have no ids of their own. */
+function closestFieldElement(path: string): HTMLElement | null {
+  for (let parts = path.split("."); parts.length; parts = parts.slice(0, -1)) {
+    const element = document.getElementById(fieldId(parts.join(".")));
+    if (element) return element;
+  }
+  return null;
+}
+
+/**
+ * Error for a field, including errors on its items ("keyAreas.2",
+ * "screenshots.0.url"), which the server reports by full path.
+ */
+function errorFor(errors: FieldErrors, path: string, itemLabel?: string): string | undefined {
+  if (errors[path]) return errors[path];
+  const key = Object.keys(errors).find((k) => k.startsWith(`${path}.`));
+  if (!key) return undefined;
+  const index = Number(key.slice(path.length + 1).split(".")[0]);
+  return Number.isInteger(index) && itemLabel ? `${itemLabel} ${index + 1}: ${errors[key]}` : errors[key];
+}
+
 type RendererProps = {
   fields: FieldConfig[];
   values: FormValues;
@@ -73,7 +94,13 @@ function Field({
 }) {
   const id = fieldId(path);
   const value = getPath(values, path);
-  const error = errors[path];
+  // Repeaters and groups render their children's errors themselves.
+  const error =
+    field.type === "list" ? errorFor(errors, path, field.itemLabel ?? "Item")
+    : field.type === "tags" ? errorFor(errors, path, "Item")
+    : field.type === "gallery" ? errorFor(errors, path, "Image")
+    : field.type === "image" ? errorFor(errors, path)
+    : errors[path];
   const describedBy = [field.help ? `${id}-help` : "", error ? `${id}-error` : ""].filter(Boolean).join(" ") || undefined;
   const common = { id, "aria-invalid": error ? true : undefined, "aria-describedby": describedBy };
   const set = (next: unknown) => onChange(path, next);
@@ -349,10 +376,11 @@ export default function SchemaForm({
 
   function onChange(path: string, value: unknown) {
     setValues((current) => setPath(current, path, value));
-    if (errors[path]) {
+    const stale = Object.keys(errors).filter((key) => key === path || key.startsWith(`${path}.`));
+    if (stale.length) {
       setErrors((current) => {
         const next = { ...current };
-        delete next[path];
+        for (const key of stale) delete next[key];
         return next;
       });
     }
@@ -384,7 +412,7 @@ export default function SchemaForm({
         const first = Object.keys(error.fields)[0];
         if (first) {
           requestAnimationFrame(() => {
-            const element = document.getElementById(fieldId(first));
+            const element = closestFieldElement(first);
             element?.focus();
             element?.scrollIntoView({ block: "center", behavior: "smooth" });
           });
