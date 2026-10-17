@@ -34,6 +34,9 @@ yarn-error.log*
 .env*
 !.env.example
 
+# Private local database and environment backups
+/.local-backups/
+
 # vercel
 .vercel
 
