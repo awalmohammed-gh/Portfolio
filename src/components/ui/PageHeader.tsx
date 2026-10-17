@@ -15,8 +15,6 @@ export default function PageHeader({
 }) {
   return (
     <section className="relative overflow-hidden">
-      <div className="bg-glow pointer-events-none absolute inset-0" aria-hidden="true" />
-      <div className="bg-dots pointer-events-none absolute inset-0" aria-hidden="true" />
       <Container className="relative pt-14 pb-12 sm:pt-20 sm:pb-16">
         <div className="animate-fade-up">
           <Eyebrow>{eyebrow}</Eyebrow>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { LuCheck } from "react-icons/lu";
 import type { Project } from "@/types/project";
 import { FullStackTag, StatusTag, TechList } from "./ProjectMeta";
@@ -39,7 +40,9 @@ export default function FeaturedProjectCard({
             {project.category}
           </p>
           <h2 className="mt-2 text-2xl font-semibold tracking-tight text-balance text-fg sm:text-3xl">
-            {project.title}
+            <Link href={`/projects/${project.slug}`} className="rounded-md hover:text-accent">
+              {project.title}
+            </Link>
           </h2>
           <p className="mt-4 text-base leading-7 text-muted">{project.description}</p>
 
@@ -73,7 +76,7 @@ export default function FeaturedProjectCard({
         </div>
       </div>
 
-      {project.roles && (
+      {project.roles.length > 0 && (
         <div className="mt-2 px-3 pb-4 sm:px-4 lg:mt-6">
           <ProjectRoles roles={project.roles} />
         </div>

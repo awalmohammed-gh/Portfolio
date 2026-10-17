@@ -2,8 +2,6 @@
 
 import { useState, type FormEvent } from "react";
 import { LuSend } from "react-icons/lu";
-import { services } from "../../data/services";
-import { site } from "../../data/site";
 
 const fieldClass =
   "mt-2 block w-full rounded-xl border border-line-strong bg-surface px-4 py-3 text-base text-fg transition outline-none placeholder:text-subtle focus:border-accent focus:ring-4 focus:ring-accent/20";
@@ -12,7 +10,23 @@ const fieldClass =
  * Frontend-only contact form: it composes an email in the visitor's mail app
  * instead of posting to a server.
  */
-export default function ContactForm() {
+type FormCopy = {
+  title: string;
+  description: string;
+  submitLabel: string;
+  hint: string;
+  successMessage: string;
+};
+
+export default function ContactForm({
+  email: recipient,
+  serviceTitles,
+  copy,
+}: {
+  email: string;
+  serviceTitles: string[];
+  copy: FormCopy;
+}) {
   const [opened, setOpened] = useState(false);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -33,7 +47,7 @@ export default function ContactForm() {
       ...(service ? [`Service: ${service}`] : []),
     ].join("\n");
 
-    window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setOpened(true);
   }
 
@@ -44,10 +58,10 @@ export default function ContactForm() {
       className="reveal rounded-4xl border border-line bg-surface p-6 shadow-card sm:p-9"
     >
       <h2 id="contact-form-title" className="text-2xl font-semibold tracking-tight text-fg">
-        Send a message
+        {copy.title}
       </h2>
       <p className="mt-2 text-[0.95rem] leading-7 text-muted">
-        Tell me about your project. I’ll reply by email.
+        {copy.description}
       </p>
 
       <div className="mt-8 grid gap-5 sm:grid-cols-2">
@@ -80,9 +94,9 @@ export default function ContactForm() {
         Service <span className="font-normal text-muted">(optional)</span>
         <select name="service" defaultValue="" className={fieldClass}>
           <option value="">Select a service</option>
-          {services.map((s) => (
-            <option key={s.title} value={s.title}>
-              {s.title}
+          {serviceTitles.map((title) => (
+            <option key={title} value={title}>
+              {title}
             </option>
           ))}
           <option value="Something else">Something else</option>
@@ -105,7 +119,7 @@ export default function ContactForm() {
         type="submit"
         className="group mt-7 inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-accent px-6 text-[0.95rem] font-medium text-accent-fg shadow-[0_8px_24px_-10px] shadow-accent/60 transition hover:bg-accent-hover sm:w-auto"
       >
-        Send message
+        {copy.submitLabel || "Send message"}
         <LuSend
           aria-hidden="true"
           className="size-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -113,9 +127,7 @@ export default function ContactForm() {
       </button>
 
       <p className="mt-4 text-sm leading-6 text-muted" aria-live="polite">
-        {opened
-          ? `Your email app should now be open with the message ready to send. If it didn’t open, email ${site.email} directly.`
-          : "Submitting opens your email app with this message pre-filled, so you can review it before sending."}
+        {opened ? copy.successMessage.replaceAll("{email}", recipient) : copy.hint}
       </p>
     </form>
   );

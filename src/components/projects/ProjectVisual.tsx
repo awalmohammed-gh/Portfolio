@@ -1,14 +1,16 @@
 import Image from "next/image";
-import type { Project } from "@/types/project";
+import Icon from "@/components/ui/Icon";
+import type { Project, ProjectTint } from "@/types/project";
 
 // Soft per-project tint behind the screenshot; works in light and dark themes.
-const tints: Record<string, string> = {
-  greenfarm: "from-emerald-500/25 via-emerald-500/5",
-  "real-estate": "from-violet-500/25 via-violet-500/5",
-  "employee-management": "from-blue-500/25 via-blue-500/5",
-  "car-rental": "from-amber-500/25 via-amber-500/5",
-  "village-store": "from-rose-500/25 via-rose-500/5",
-  "learning-management-system": "from-cyan-500/25 via-cyan-500/5",
+const tints: Record<ProjectTint, string> = {
+  indigo: "from-indigo-500/25 via-indigo-500/5",
+  emerald: "from-emerald-500/25 via-emerald-500/5",
+  violet: "from-violet-500/25 via-violet-500/5",
+  blue: "from-blue-500/25 via-blue-500/5",
+  amber: "from-amber-500/25 via-amber-500/5",
+  rose: "from-rose-500/25 via-rose-500/5",
+  cyan: "from-cyan-500/25 via-cyan-500/5",
 };
 
 /**
@@ -22,8 +24,7 @@ export default function ProjectVisual({
   project: Project;
   sizes: string;
 }) {
-  const Icon = project.icon;
-  const tint = tints[project.slug] ?? "from-indigo-500/25 via-indigo-500/5";
+  const tint = tints[project.tint] ?? tints.indigo;
 
   return (
     <div
@@ -40,10 +41,10 @@ export default function ProjectVisual({
           <span className="size-2 rounded-full bg-[#28c840]" />
         </div>
         <div className="relative aspect-2/1">
-          {project.image ? (
+          {project.coverImage ? (
             <Image
-              src={project.image}
-              alt={`Screenshot of ${project.title}`}
+              src={project.coverImage.url}
+              alt={project.coverImage.alt || `Screenshot of ${project.title}`}
               fill
               sizes={sizes}
               className="object-cover object-center"
@@ -52,7 +53,7 @@ export default function ProjectVisual({
             <div className="absolute inset-0 grid place-items-center bg-surface-2" aria-hidden="true">
               <div className="flex flex-col items-center gap-3 text-center">
                 <span className="grid size-14 place-items-center rounded-2xl bg-surface text-accent shadow-card">
-                  <Icon className="size-6" />
+                  <Icon name={project.icon} className="size-6" />
                 </span>
                 <span className="px-4 text-sm font-medium text-muted">{project.title}</span>
               </div>

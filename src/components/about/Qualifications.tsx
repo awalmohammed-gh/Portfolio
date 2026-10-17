@@ -1,8 +1,22 @@
 import { LuAward } from "react-icons/lu";
-import { education } from "@/data/education";
+import type { EducationEntry } from "@/types/education";
+
+const statusText = {
+  completed: "Completed",
+  "graduation-pending": "Graduation pending",
+  "in-progress": "In progress",
+} as const;
 
 /** Compact qualifications summary, derived from the education data. */
-export default function Qualifications() {
+export default function Qualifications({
+  education,
+  title,
+  note,
+}: {
+  education: EducationEntry[];
+  title: string;
+  note: string;
+}) {
   return (
     <aside
       aria-labelledby="qualifications-heading"
@@ -19,7 +33,7 @@ export default function Qualifications() {
         <span className="grid size-10 place-items-center rounded-xl bg-accent-soft text-accent">
           <LuAward aria-hidden="true" className="size-5" />
         </span>
-        Qualifications
+        {title || "Qualifications"}
       </h3>
 
       <ul className="relative mt-6 space-y-3">
@@ -34,7 +48,7 @@ export default function Qualifications() {
                 <span
                   className={`text-sm font-medium ${completed ? "text-success" : "text-warning"}`}
                 >
-                  {completed ? "Completed" : "Graduation pending"}
+                  {statusText[qualification.status]}
                 </span>
               </div>
               <p className="mt-2 font-medium text-fg">{qualification.title}</p>
@@ -45,9 +59,7 @@ export default function Qualifications() {
         })}
       </ul>
 
-      <p className="relative mt-5 text-sm leading-6 text-muted">
-        The Bachelor of Information Technology will be formally conferred upon graduation.
-      </p>
+      {note && <p className="relative mt-5 text-sm leading-6 text-muted">{note}</p>}
     </aside>
   );
 }

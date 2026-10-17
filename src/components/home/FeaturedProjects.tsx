@@ -3,21 +3,28 @@ import ProjectCard from "@/components/projects/ProjectCard";
 import ButtonLink from "@/components/ui/ButtonLink";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
-import { featuredProjects, projects } from "@/data/projects";
+import { getContent, getPublishedProjects } from "@/lib/data/public";
+import { fill } from "@/lib/format";
 
-export default function FeaturedProjects() {
+export default async function FeaturedProjects() {
+  const [projects, home] = await Promise.all([getPublishedProjects(), getContent("home")]);
+  const featuredProjects = projects.filter((p) => p.featured);
+  const copy = home.featuredProjects;
+
+  if (featuredProjects.length === 0) return null;
+
   return (
     <section aria-labelledby="featured-projects" className="py-16 sm:py-24">
       <Container>
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <SectionHeading
             id="featured-projects"
-            eyebrow="Selected work"
-            title="Full-stack projects"
-            description="Systems that combine frontend interfaces, backend functionality, and data management."
+            eyebrow={copy.eyebrow}
+            title={copy.title}
+            description={copy.description}
           />
           <ButtonLink href="/projects" variant="secondary" className="reveal self-start md:self-auto">
-            All {projects.length} projects
+            {fill(copy.buttonLabel || "All {count} projects", { count: projects.length })}
             <LuArrowRight
               aria-hidden="true"
               className="size-4 transition group-hover/button:translate-x-0.5"
@@ -27,7 +34,7 @@ export default function FeaturedProjects() {
 
         <div className="mt-12 grid gap-5 md:grid-cols-2">
           {featuredProjects.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
+            <ProjectCard key={project.id} project={project} />
           ))}
         </div>
       </Container>

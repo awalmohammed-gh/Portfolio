@@ -1,0 +1,21 @@
+.shell {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--bg);
+}
+
+/* One continuous page backdrop starts above the navigation, rather than
+   restarting below it. The existing theme tokens supply both color modes. */
+.backdrop {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: -1;
+  height: clamp(32rem, 80svh, 42rem);
+  pointer-events: none;
+}
+
+/* These components also render outside the public shell (project previews
+   and fallbacks), where their own backdrop is still needed. */
+.shell [data-local-page-backdrop] {
+  display: none;
+}

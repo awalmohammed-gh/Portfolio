@@ -1,4 +1,5 @@
 import { LuCheck } from "react-icons/lu";
+import Icon from "@/components/ui/Icon";
 import type { ProjectRole } from "@/types/project";
 
 export default function ProjectRoles({ roles }: { roles: ProjectRole[] }) {
@@ -8,11 +9,11 @@ export default function ProjectRoles({ roles }: { roles: ProjectRole[] }) {
         {roles.length} user roles
       </p>
       <ul className={`mt-3 grid gap-3 ${roles.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-3"}`}>
-        {roles.map(({ name, icon: Icon, responsibilities }) => (
+        {roles.map(({ name, icon, responsibilities }) => (
           <li key={name} className="rounded-2xl border border-line bg-surface-2 p-4">
             <p className="flex items-center gap-2.5 font-semibold text-fg">
               <span className="grid size-8 place-items-center rounded-lg bg-accent-soft text-accent">
-                <Icon aria-hidden="true" className="size-3.5" />
+                <Icon name={icon} aria-hidden="true" className="size-3.5" />
               </span>
               {name}
             </p>

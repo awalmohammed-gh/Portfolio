@@ -1,22 +1,46 @@
-import type { IconType } from "react-icons";
+import type { ImageAsset } from "./media";
 
 export interface Skill {
+  id: string;
   name: string;
-  icon: IconType;
+  /** Icon name from lib/icons. */
+  icon: string;
+  /** Optional uploaded logo, shown instead of the icon. */
+  iconImage?: ImageAsset;
 }
 
 export interface SkillGroup {
+  id: string;
   title: string;
   description: string;
-  icon: IconType;
+  icon: string;
   skills: Skill[];
 }
 
 export interface Service {
+  id: string;
   title: string;
   description: string;
-  icon: IconType;
+  icon: string;
   includes: string[];
+}
+
+export interface Experience {
+  id: string;
+  role: string;
+  company: string;
+  companyUrl?: string;
+  location?: string;
+  employmentType?: string;
+  /** "YYYY-MM" */
+  startDate: string;
+  /** "YYYY-MM"; empty when current. */
+  endDate?: string;
+  current: boolean;
+  description: string;
+  highlights: string[];
+  technologies: string[];
+  logo?: ImageAsset;
 }
 
 export interface NavLink {
@@ -26,6 +50,14 @@ export interface NavLink {
 
 export interface SocialLink {
   label: string;
-  href: string;
-  icon: IconType;
+  url: string;
+  /** Icon name from lib/icons. */
+  icon: string;
+}
+
+export interface PhoneNumber {
+  /** As shown, e.g. "053 863 2229". */
+  display: string;
+  /** International format used for dialling, e.g. "+233538632229". */
+  number: string;
 }

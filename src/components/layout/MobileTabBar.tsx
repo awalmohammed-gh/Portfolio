@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { IconType } from "react-icons";
 import { LuBriefcase, LuFolderKanban, LuHouse, LuMessageCircle, LuUserRound } from "react-icons/lu";
-import { navLinks } from "@/data/site";
+import { navLinks } from "@/lib/navigation";
 
 const icons: Record<string, IconType> = {
   "/": LuHouse,

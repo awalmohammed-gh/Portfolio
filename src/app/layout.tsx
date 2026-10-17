@@ -1,10 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Footer from "@/components/layout/Footer";
-import MobileTabBar from "@/components/layout/MobileTabBar";
-import Navbar from "@/components/layout/Navbar";
-import SmoothScroll from "@/components/layout/SmoothScroll";
-import { site } from "@/data/site";
+import { getSiteSettings } from "@/lib/data/public";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -17,30 +13,33 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: `${site.name} | ${site.title}`,
-    template: `%s | ${site.name}`,
-  },
-  description: site.heroDescription,
-  keywords: [
-    "Mohammed Awal",
-    "Web Developer",
-    "Full-Stack Development",
-    "SaaS Developer",
-    "React",
-    "Next.js",
-    "Node.js",
-    "MongoDB",
-  ],
-  authors: [{ name: site.name }],
-  openGraph: {
-    title: `${site.name} | ${site.title}`,
-    description: site.heroDescription,
-    type: "website",
-    images: [site.profileImage.src],
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings();
+  const title = settings.seoTitle || [settings.siteName, settings.jobTitle].filter(Boolean).join(" | ");
+  const description = settings.seoDescription || settings.siteDescription;
+  const ogImage = settings.ogImage;
+
+  return {
+    ...(settings.canonicalUrl ? { metadataBase: new URL(settings.canonicalUrl) } : {}),
+    title: {
+      default: title,
+      template: `%s | ${settings.siteName}`,
+    },
+    description,
+    keywords: settings.keywords,
+    authors: [{ name: settings.siteName }],
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      siteName: settings.siteName,
+      ...(ogImage
+        ? { images: [{ url: ogImage.url, width: ogImage.width, height: ogImage.height, alt: ogImage.alt }] }
+        : {}),
+    },
+    icons: { icon: settings.favicon?.url || "/icon.svg" },
+  };
+}
 
 export const viewport: Viewport = {
   // Lets the mobile tab bar extend under the iPhone home indicator (padded via safe-area insets).
@@ -51,8 +50,8 @@ export const viewport: Viewport = {
   ],
 };
 
-// Applies the saved (or system) theme before first paint to avoid a flash.
-const themeScript = `(function(){try{var t=localStorage.getItem("theme");if(t!=="light"&&t!=="dark"){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`;
+// Applies the saved (cookie) or system theme before first paint to avoid a flash.
+const themeScript = `(function(){try{var m=document.cookie.match(/(?:^|; )theme=(light|dark)/);var t=m?m[1]:(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
@@ -64,20 +63,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="flex min-h-full flex-col pb-[calc(6.5rem+env(safe-area-inset-bottom))] font-sans md:pb-0">
-        <a
-          href="#main"
-          className="fixed top-3 left-3 z-100 -translate-y-24 rounded-full bg-accent px-4 py-2 text-sm font-medium text-accent-fg transition focus:translate-y-0"
-        >
-          Skip to content
-        </a>
-        <SmoothScroll />
-        <Navbar />
-        <main id="main" className="flex-1">
-          {children}
-        </main>
-        <Footer />
-        <MobileTabBar />
+      {/* Browser extensions (e.g. Grammarly) add attributes to <body> before React hydrates. */}
+      <body className="flex min-h-full flex-col font-sans" suppressHydrationWarning>
+        {children}
       </body>
     </html>
   );

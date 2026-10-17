@@ -5,28 +5,31 @@ import { usePathname } from "next/navigation";
 import { LuArrowUpRight } from "react-icons/lu";
 import Logo from "@/components/ui/Logo";
 import ThemeToggle from "@/components/ui/ThemeToggle";
-import { navLinks, site } from "@/data/site";
+import { navLinks } from "@/lib/navigation";
+import type { ImageAsset } from "@/types/media";
+import styles from "./Navbar.module.css";
 
 function isActive(pathname: string, href: string) {
-  return href === "/" ? pathname === "/" : pathname.startsWith(href);
+  return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
 }
 
-/** Top bar. On phones, page navigation moves to the bottom tab bar (MobileTabBar). */
-export default function Navbar() {
+/** Floating public navigation with a centered desktop link group. */
+export default function Navbar({ siteName, logo }: { siteName: string; logo?: ImageAsset }) {
   const pathname = usePathname();
   const pageLinks = navLinks.filter((link) => link.href !== "/contact");
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-surface/80 pt-[env(safe-area-inset-top)] backdrop-blur-xl">
+    <header className={`${styles.header} sticky top-[calc(0.75rem+env(safe-area-inset-top))] z-50 mx-3 mt-[calc(0.75rem+env(safe-area-inset-top))] mb-3 rounded-full border border-line bg-surface/85 shadow-card backdrop-blur-xl`}>
       <nav
         aria-label="Primary"
-        className="mx-auto flex h-16 w-full max-w-330 items-center justify-between gap-3 px-4 sm:h-18 sm:px-6 lg:px-8"
+        className={`${styles.nav} mx-auto flex h-14 w-full max-w-330 items-center justify-between gap-3 px-4 sm:h-16 sm:px-6`}
       >
-        <Link href="/" className="flex min-w-0 items-center rounded-lg" aria-label={`${site.name}, home`}>
-          <Logo className="truncate" />
+        <Link href="/" className="flex min-w-0 flex-col items-start justify-center gap-0.5 justify-self-start rounded-lg" aria-label={`${siteName}, home`}>
+          <Logo name={siteName} image={logo} className="max-w-full truncate object-contain" />
+          <span className="hidden text-[0.6rem] font-medium tracking-[0.16em] text-subtle uppercase lg:block">Portfolio &amp; selected work</span>
         </Link>
 
-        <ul className="hidden items-center gap-1 md:flex">
+        <ul className="hidden items-center gap-0.5 rounded-full border border-line bg-surface-2/60 p-1 md:flex">
           {pageLinks.map(({ href, label }) => {
             const active = isActive(pathname, href);
             return (
@@ -34,10 +37,10 @@ export default function Navbar() {
                 <Link
                   href={href}
                   aria-current={active ? "page" : undefined}
-                  className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+                  className={`inline-flex items-center justify-center rounded-full border px-3 py-2 text-[0.8rem] font-medium transition lg:px-4 lg:text-sm ${
                     active
-                      ? "bg-surface-2 text-fg"
-                      : "text-muted hover:bg-surface-2 hover:text-fg"
+                      ? "border-line bg-surface text-accent shadow-sm"
+                      : "border-transparent text-muted hover:bg-surface hover:text-fg"
                   }`}
                 >
                   {label}
@@ -47,17 +50,19 @@ export default function Navbar() {
           })}
         </ul>
 
-        <div className="flex shrink-0 items-center gap-1">
-          <ThemeToggle />
+        <div className="flex shrink-0 items-center gap-1 justify-self-end md:gap-2 lg:gap-3">
+          <ThemeToggle className="md:border md:border-line md:bg-surface/70" />
+          <span aria-hidden="true" className="hidden h-5 w-px bg-line lg:block" />
           <Link
             href="/contact"
-            className="group ml-2 hidden h-11 items-center gap-2 rounded-full bg-accent px-5 text-[0.95rem] font-medium text-accent-fg shadow-[0_8px_24px_-10px] shadow-accent/60 transition hover:bg-accent-hover md:inline-flex"
+            aria-current={isActive(pathname, "/contact") ? "page" : undefined}
+            className="group hidden h-11 items-center gap-2 rounded-full bg-accent py-1 pr-1.5 pl-4 text-[0.8rem] font-medium whitespace-nowrap text-accent-fg shadow-[0_8px_24px_-10px] shadow-accent/60 transition hover:bg-accent-hover md:inline-flex lg:pl-5 lg:text-sm"
           >
             Let’s talk
-            <LuArrowUpRight
+            <span className="grid size-8 place-items-center rounded-full bg-accent-fg/15"><LuArrowUpRight
               aria-hidden="true"
               className="size-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-            />
+            /></span>
           </Link>
         </div>
       </nav>

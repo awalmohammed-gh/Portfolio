@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { LuArrowUpRight } from "react-icons/lu";
+import Icon from "@/components/ui/Icon";
 import type { Project } from "@/types/project";
 import { StatusTag } from "./ProjectMeta";
 import ProjectLinks from "./ProjectLinks";
@@ -7,7 +8,7 @@ import ProjectVisual from "./ProjectVisual";
 
 /** Compact, equal-height card for project grids. */
 export default function ProjectCard({ project }: { project: Project }) {
-  const detailsHref = `/projects#${project.slug}`;
+  const detailsHref = `/projects/${project.slug}`;
 
   return (
     <article className="group reveal flex h-full flex-col rounded-3xl border border-line bg-surface p-3 shadow-card transition hover:border-line-strong">
@@ -33,14 +34,14 @@ export default function ProjectCard({ project }: { project: Project }) {
         </h3>
         <p className="mt-2.5 text-[0.95rem] leading-7 text-muted">{project.summary}</p>
 
-        {project.roles && (
+        {project.roles.length > 0 && (
           <ul className="mt-4 flex flex-wrap gap-2" aria-label="User roles">
-            {project.roles.map(({ name, icon: Icon }) => (
+            {project.roles.map(({ name, icon }) => (
               <li
                 key={name}
                 className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface-2 px-3 py-1 text-sm text-fg"
               >
-                <Icon aria-hidden="true" className="size-3.5 text-accent" />
+                <Icon name={icon} aria-hidden="true" className="size-3.5 text-accent" />
                 {name}
               </li>
             ))}

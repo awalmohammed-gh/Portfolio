@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { LuArrowRight, LuCheck } from "react-icons/lu";
+import Icon from "@/components/ui/Icon";
 import type { Service } from "@/types/content";
 
 export default function ServiceCard({ service, index }: { service: Service; index: number }) {
-  const { title, description, icon: Icon, includes } = service;
+  const { title, description, icon, includes } = service;
 
   return (
     <article className="group reveal relative flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-surface p-7 shadow-card transition hover:-translate-y-1 hover:border-line-strong">
@@ -13,7 +14,7 @@ export default function ServiceCard({ service, index }: { service: Service; inde
       />
       <div className="relative flex items-center justify-between">
         <span className="grid size-12 place-items-center rounded-2xl bg-accent-soft text-accent transition group-hover:bg-accent group-hover:text-accent-fg">
-          <Icon aria-hidden="true" className="size-5" />
+          <Icon name={icon} aria-hidden="true" className="size-5" />
         </span>
         <span className="font-mono text-sm text-subtle">{String(index + 1).padStart(2, "0")}</span>
       </div>
