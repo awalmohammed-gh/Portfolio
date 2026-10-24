@@ -231,6 +231,28 @@ body {
   }
 }
 
+/* Theme-adaptive logo switching */
+.dark-theme-hidden {
+  display: block;
+}
+.light-theme-hidden {
+  display: none;
+}
+:root[data-theme="dark"] .dark-theme-hidden {
+  display: none;
+}
+:root[data-theme="dark"] .light-theme-hidden {
+  display: block;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .dark-theme-hidden {
+    display: none;
+  }
+  :root:not([data-theme]) .light-theme-hidden {
+    display: block;
+  }
+}
+
 /* Scroll reveal via scroll-driven animations; static where unsupported. */
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {

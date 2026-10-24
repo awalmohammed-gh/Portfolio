@@ -1,5 +1,27 @@
-/* Keep the phone capsule intact. On desktop, equal outer tracks keep the
-   page links centered regardless of the width of the name or contact action. */
+/* Mobile: sticky full-width non-floating header with safe-area padding */
+.header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  margin: 0;
+  border-radius: 0;
+  border-width: 0 0 1px 0;
+  border-style: solid;
+  border-color: var(--line);
+  padding-top: env(safe-area-inset-top);
+  background-color: var(--surface);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+@supports (backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px)) {
+  .header {
+    background-color: color-mix(in srgb, var(--surface) 90%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+}
+
+/* Desktop: centered floating capsule navigation */
 @media (min-width: 48rem) {
   .header {
     top: calc(1rem + env(safe-area-inset-top));
@@ -7,6 +29,9 @@
     max-width: 80rem;
     margin: calc(1rem + env(safe-area-inset-top)) auto 1rem;
     border-radius: 1.5rem;
+    border-width: 1px;
+    padding-top: 0;
+    box-shadow: 0 1px 2px rgb(12 12 20 / 0.04), 0 8px 24px -12px rgb(12 12 20 / 0.12);
   }
 
   .nav {

@@ -46,7 +46,8 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     icons: {
       icon: [
-        { url: settings.favicon?.url || "/icon.svg" },
+        { url: "/favicon.ico", sizes: "any" },
+        { url: "/favicon.png", sizes: "32x32", type: "image/png" },
         { url: "/icons/icon-192x192.png", sizes: "192x192", type: "image/png" },
         { url: "/icons/icon-512x512.png", sizes: "512x512", type: "image/png" },
       ],
@@ -58,7 +59,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export const viewport: Viewport = {
-  // Lets the mobile tab bar extend under the iPhone home indicator (padded via safe-area insets).
+  width: "device-width",
+  initialScale: 1,
   viewportFit: "cover",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#f7f7f9" },
@@ -66,8 +68,8 @@ export const viewport: Viewport = {
   ],
 };
 
-// Applies the saved (cookie) or system theme before first paint to avoid a flash.
-const themeScript = `(function(){try{var m=document.cookie.match(/(?:^|; )theme=(light|dark)/);var t=m?m[1]:(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`;
+// Adapts to the system theme dynamically before first paint, unless the user has explicitly changed it.
+const themeScript = `(function(){try{var m=document.cookie.match(/(?:^|; )theme=(light|dark)/);if(m){document.documentElement.setAttribute("data-theme",m[1])}else{var mq=window.matchMedia("(prefers-color-scheme: dark)");var s=function(e){if(!document.cookie.match(/(?:^|; )theme=(light|dark)/)){var d=(e&&e.matches!==undefined)?e.matches:mq.matches;document.documentElement.setAttribute("data-theme",d?"dark":"light")}};s(mq);if(mq.addEventListener){mq.addEventListener("change",s)}else if(mq.addListener){mq.addListener(s)}}}catch(e){}})()`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
@@ -77,6 +79,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon.png" type="image/png" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
         <meta name="mobile-web-app-capable" content="yes" />

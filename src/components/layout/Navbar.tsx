@@ -20,7 +20,7 @@ export default function Navbar({ siteName, logo }: { siteName: string; logo?: Im
   const pageLinks = navLinks.filter((link) => link.href !== "/contact");
 
   return (
-    <header className={`${styles.header} sticky top-[calc(0.75rem+env(safe-area-inset-top))] z-50 mx-3 mt-[calc(0.75rem+env(safe-area-inset-top))] mb-3 rounded-full border border-line bg-surface/85 shadow-card backdrop-blur-xl`}>
+    <header className={`${styles.header} z-50`}>
       <nav
         aria-label="Primary"
         className={`${styles.nav} mx-auto flex h-14 w-full max-w-330 items-center justify-between gap-3 px-4 sm:h-16 sm:px-6`}

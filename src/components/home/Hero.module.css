@@ -1,4 +1,4 @@
-﻿.hero {
+.hero {
   width: calc(100% - 1.5rem);
   max-width: 80rem;
   margin: 0 auto 0.75rem;
@@ -21,7 +21,7 @@
   display: grid;
   align-items: center;
   min-width: 0;
-  min-height: 36rem;
+  min-height: auto;
 }
 
 .copy {
@@ -143,6 +143,7 @@
 .withoutImage .badge { border-color: var(--line); background: var(--surface-2); color: var(--fg); }
 .withoutImage .highlight { background: linear-gradient(100deg, var(--accent), var(--accent-2)); background-clip: text; -webkit-background-clip: text; }
 .withoutImage .secondaryCta { border-color: var(--line); background: var(--surface); color: var(--fg); }
+
 .details {
   position: relative;
   z-index: 2;
@@ -197,6 +198,76 @@
   background: var(--accent-soft);
 }
 
+/* Mobile specific: fits the phone screen viewport height */
+@media (max-width: 47.999rem) {
+  .hero {
+    width: 100%;
+    margin: 0;
+    padding: 0.5rem 0.75rem 0;
+  }
+
+  .banner {
+    min-height: calc(100svh - 3.5rem - env(safe-area-inset-top) - 5rem - env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 1.25rem;
+  }
+
+  .heroGrid {
+    min-height: 0;
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  .copy {
+    padding: 1.25rem 1rem;
+    max-width: 100%;
+  }
+
+  .badge {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.7rem;
+  }
+
+  .heading {
+    margin-top: 0.65rem;
+    font-size: clamp(1.65rem, 5.8vw, 2.15rem);
+    line-height: 1.12;
+  }
+
+  .intro {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .description {
+    display: none;
+  }
+
+  .actions {
+    margin-top: 1rem;
+    gap: 0.5rem;
+  }
+
+  .actions > a {
+    min-height: 2.65rem;
+    padding-block: 0.55rem;
+    font-size: 0.85rem;
+  }
+
+  .details {
+    margin: 0.5rem 0 0;
+    border-radius: 1rem;
+  }
+
+  .details > * {
+    padding: 0.85rem 1rem;
+  }
+}
+
 @media (min-width: 40rem) {
   .copy { padding: 2.75rem; }
 
@@ -215,13 +286,13 @@
 @media (min-width: 48rem) {
   .hero { width: calc(100% - 3rem); }
   .banner { border-radius: 1.5rem; }
+  .heroGrid { min-height: 36rem; }
 }
 
 @media (min-width: 64rem) {
   .heroGrid { min-height: 40rem; }
   .copy { padding: 3.5rem 3rem; }
   .heading { font-size: clamp(3rem, 4.35vw, 3.75rem); }
-
 
   .details { grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.7fr) minmax(0, 1fr); }
   .details { margin: 0 2rem 2rem; }

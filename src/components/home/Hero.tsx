@@ -1,4 +1,4 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import { LuArrowRight, LuArrowUpRight } from "react-icons/lu";
 import ButtonLink from "@/components/ui/ButtonLink";
@@ -76,7 +76,8 @@ export default async function Hero() {
 
         </div>
 
-        <div className={`${styles.details} ${!latestEducation ? styles.withoutEducation : ""} ${heroStack.length === 0 ? styles.withoutStack : ""}`} data-hero-layer="content">
+        {/* Desktop inline details inside banner */}
+        <div className={`${styles.details} hidden md:grid ${!latestEducation ? styles.withoutEducation : ""} ${heroStack.length === 0 ? styles.withoutStack : ""}`} data-hero-layer="content">
           {heroStack.length > 0 && (
             <div className={styles.stack}>
               {hero.coreStackTitle && <h2 className="text-[0.65rem] font-semibold tracking-[0.14em] text-subtle uppercase">{hero.coreStackTitle}</h2>}
@@ -118,6 +119,47 @@ export default async function Hero() {
             </Link>
           )}
         </div>
+      </div>
+
+      {/* Mobile details below the hero banner so the hero banner fits the mobile screen height */}
+      <div className={`${styles.details} grid md:hidden mt-3 ${!latestEducation ? styles.withoutEducation : ""} ${heroStack.length === 0 ? styles.withoutStack : ""}`}>
+        {heroStack.length > 0 && (
+          <div className={styles.stack}>
+            {hero.coreStackTitle && <h2 className="text-[0.65rem] font-semibold tracking-[0.14em] text-subtle uppercase">{hero.coreStackTitle}</h2>}
+            <ul className="mt-2.5 flex flex-wrap gap-1.5" aria-label="Core technologies">
+              {heroStack.map((skill) => (
+                <li key={skill.id} className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-2.5 py-1 text-xs text-fg">
+                  <SkillIcon skill={skill} className="size-3 shrink-0 text-accent" />
+                  {skill.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <Link href="/projects" className={`${styles.projectSummary} group`}>
+          <div className="flex items-center justify-between gap-3">
+            <p className="text-[0.65rem] font-semibold tracking-[0.14em] text-subtle uppercase">{hero.projectsCardLabel || "Projects"}</p>
+            <LuArrowUpRight aria-hidden="true" className="size-4 shrink-0 text-accent transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </div>
+          <div className="mt-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <span className="text-3xl font-semibold tracking-tight text-fg">{String(projects.length).padStart(2, "0")}</span>
+            {hero.projectsCardCaption && <span className="text-xs leading-5 text-muted">{hero.projectsCardCaption}</span>}
+          </div>
+        </Link>
+
+        {latestEducation && (
+          <Link href="/about#education" className={`${styles.education} group`}>
+            <span className="grid size-9 shrink-0 place-items-center rounded-xl border border-line bg-surface text-accent">
+              <Icon name={latestEducation.icon} aria-hidden="true" className="size-4" />
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block text-sm leading-5 font-semibold text-fg">{latestEducation.qualification.title}</span>
+              <span className="mt-0.5 block text-xs leading-4 text-muted">{latestEducation.institution}</span>
+            </span>
+            <LuArrowUpRight aria-hidden="true" className="size-4 shrink-0 text-subtle transition group-hover:text-accent" />
+          </Link>
+        )}
       </div>
     </section>
   );
