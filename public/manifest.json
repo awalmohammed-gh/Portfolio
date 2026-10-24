@@ -1,0 +1,119 @@
+{
+  "name": "Mohammed Awal | Full-Stack Developer",
+  "short_name": "Mohammed Awal",
+  "description": "Full-Stack Web Developer portfolio. Explore selected projects, experience, skills, services, and get in touch.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#08080c",
+  "theme_color": "#4f46e5",
+  "categories": ["portfolio", "business", "productivity", "developer"],
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Admin Dashboard",
+      "short_name": "Admin",
+      "description": "Portfolio content management and system administration",
+      "url": "/admin",
+      "icons": [
+        {
+          "src": "/icons/shortcut-admin-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        },
+        {
+          "src": "/icons/shortcut-admin.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "My Projects",
+      "short_name": "Projects",
+      "description": "Explore recent web applications and software projects",
+      "url": "/#projects",
+      "icons": [
+        {
+          "src": "/icons/shortcut-projects-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        },
+        {
+          "src": "/icons/shortcut-projects.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "My Services",
+      "short_name": "Services",
+      "description": "Full-stack development, software engineering, and digital solutions",
+      "url": "/#services",
+      "icons": [
+        {
+          "src": "/icons/shortcut-services-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        },
+        {
+          "src": "/icons/shortcut-services.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Contact Me",
+      "short_name": "Contact",
+      "description": "Send a direct message or discuss a project inquiry",
+      "url": "/#contact",
+      "icons": [
+        {
+          "src": "/icons/shortcut-contact-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        },
+        {
+          "src": "/icons/shortcut-contact.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}

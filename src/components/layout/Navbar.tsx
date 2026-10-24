@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { LuArrowUpRight } from "react-icons/lu";
 import Logo from "@/components/ui/Logo";
 import ThemeToggle from "@/components/ui/ThemeToggle";
+import InstallPWAButton from "@/components/pwa/InstallPWAButton";
 import { navLinks } from "@/lib/navigation";
 import type { ImageAsset } from "@/types/media";
 import styles from "./Navbar.module.css";
@@ -51,6 +52,7 @@ export default function Navbar({ siteName, logo }: { siteName: string; logo?: Im
         </ul>
 
         <div className="flex shrink-0 items-center gap-1 justify-self-end md:gap-2 lg:gap-3">
+          <InstallPWAButton />
           <ThemeToggle className="md:border md:border-line md:bg-surface/70" />
           <span aria-hidden="true" className="hidden h-5 w-px bg-line lg:block" />
           <Link

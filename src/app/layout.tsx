@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { getSiteSettings } from "@/lib/data/public";
+import ServiceWorkerRegister from "@/components/pwa/ServiceWorkerRegister";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -28,6 +29,12 @@ export async function generateMetadata(): Promise<Metadata> {
     description,
     keywords: settings.keywords,
     authors: [{ name: settings.siteName }],
+    manifest: "/manifest.json",
+    appleWebApp: {
+      capable: true,
+      statusBarStyle: "default",
+      title: settings.siteName,
+    },
     openGraph: {
       title,
       description,
@@ -37,7 +44,16 @@ export async function generateMetadata(): Promise<Metadata> {
         ? { images: [{ url: ogImage.url, width: ogImage.width, height: ogImage.height, alt: ogImage.alt }] }
         : {}),
     },
-    icons: { icon: settings.favicon?.url || "/icon.svg" },
+    icons: {
+      icon: [
+        { url: settings.favicon?.url || "/icon.svg" },
+        { url: "/icons/icon-192x192.png", sizes: "192x192", type: "image/png" },
+        { url: "/icons/icon-512x512.png", sizes: "512x512", type: "image/png" },
+      ],
+      apple: [
+        { url: "/icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      ],
+    },
   };
 }
 
@@ -61,10 +77,18 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="Mohammed Awal" />
+        <meta name="application-name" content="Mohammed Awal" />
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       {/* Browser extensions (e.g. Grammarly) add attributes to <body> before React hydrates. */}
       <body className="flex min-h-full flex-col font-sans" suppressHydrationWarning>
+        <ServiceWorkerRegister />
         {children}
       </body>
     </html>
